@@ -18,10 +18,10 @@ function Header({}: Props) {
           Home{" "}
         </Link>
         <Link
-          href={"/write"}
+          href={"/vocab"}
           className="text-gray-700 hover:underline hover:text-blue-400"
         >
-          Writing{" "}
+          Vocabulary{" "}
         </Link>
         <Link
           href={"/speaking"}
