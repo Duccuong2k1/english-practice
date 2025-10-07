@@ -7,6 +7,7 @@ type Sentence = {
   difficulty?: string;
   topic?: string;
   sentence: string; // câu tiếng Việt
+  formula?: string; // công thức
 };
 
 type CheckResult = {
@@ -25,6 +26,8 @@ const topics = [
   "Mua sắm",
   "Thời tiết",
   "Phỏng vấn",
+  "IELTS",
+  "TOEIC",
 ];
 const difficulties = ["A1", "A2", "B1", "B2", "C1"];
 
@@ -244,7 +247,7 @@ export default function WritingTopicPractice() {
     const s = typeof score === "number" ? Math.max(0, Math.min(10, score)) : 0;
     const pct = (s / 10) * 100;
     return (
-      <div className="w-full bg-gray-200 rounded h-3 overflow-hidden mt-2">
+      <div className="w-full h-3 mt-2 overflow-hidden bg-gray-200 rounded">
         <div
           className="h-full rounded"
           style={{
@@ -266,7 +269,7 @@ export default function WritingTopicPractice() {
     return (
       <div className="grid grid-cols-2 gap-4 mt-3">
         <div>
-          <div className="text-xs text-gray-500 mb-1">Your answer</div>
+          <div className="mb-1 text-xs text-gray-500">Your answer</div>
           <div className="p-2 border rounded min-h-[44px]">
             {aTokens.length === 0 ? (
               <span className="text-gray-400">—</span>
@@ -287,7 +290,7 @@ export default function WritingTopicPractice() {
         </div>
 
         <div>
-          <div className="text-xs text-gray-500 mb-1">Correct answer</div>
+          <div className="mb-1 text-xs text-gray-500">Correct answer</div>
           <div className="p-2 border rounded min-h-[44px]">
             {bTokens.length === 0 ? (
               <span className="text-gray-400">—</span>
@@ -311,7 +314,7 @@ export default function WritingTopicPractice() {
   }
 
   return (
-    <div className="p-4 max-w-2xl mx-auto space-y-4">
+    <div className="max-w-2xl p-4 mx-auto space-y-4">
       <h2 className="text-2xl font-semibold">
         ✍️ Luyện viết theo Topic (có chấm & giải thích)
       </h2>
@@ -320,7 +323,7 @@ export default function WritingTopicPractice() {
         <div>
           <label className="block mb-1 font-medium">Chọn mức độ:</label>
           <select
-            className="border px-3 py-2 rounded w-full"
+            className="w-full px-3 py-2 border rounded"
             value={difficulty}
             onChange={(e) => setDifficulty(e.target.value)}
             disabled={loading}
@@ -336,7 +339,7 @@ export default function WritingTopicPractice() {
         <div>
           <label className="block mb-1 font-medium">Chọn chủ đề:</label>
           <select
-            className="border px-3 py-2 rounded w-full"
+            className="w-full px-3 py-2 border rounded"
             value={topic}
             onChange={(e) => setTopic(e.target.value)}
             disabled={loading}
@@ -352,7 +355,7 @@ export default function WritingTopicPractice() {
 
       <div className="flex gap-2">
         <button
-          className="bg-blue-600 text-white py-2 px-4 rounded"
+          className="px-4 py-2 text-white bg-blue-600 rounded"
           onClick={generateTopicSentences}
           disabled={loading}
         >
@@ -361,7 +364,7 @@ export default function WritingTopicPractice() {
             : `🎲 Sinh ${batchSize} câu theo Topic`}
         </button>
 
-        <div className="ml-auto mt-2 text-sm text-gray-600">
+        <div className="mt-2 ml-auto text-sm text-gray-600">
           {sentences.length > 0 ? (
             <span>
               Câu {currentIndex + 1}/{sentences.length}
@@ -373,14 +376,17 @@ export default function WritingTopicPractice() {
       </div>
 
       {current ? (
-        <div className="mt-4 p-4 border rounded bg-white shadow-sm">
-          <div className="mb-2 flex items-center justify-between">
+        <div className="p-4 mt-4 bg-white border rounded shadow-sm">
+          <div className="flex items-center justify-between mb-2">
             <div>
               <div className="text-sm text-gray-500">
                 Chủ đề: <strong>{current.topic ?? topic}</strong>
               </div>
               <div className="text-sm text-gray-500">
                 Thì: <strong>{current.tense ?? "-"}</strong>
+              </div>
+              <div className="text-sm text-gray-500">
+                công thức: <strong>{current.formula ?? "-"}</strong>
               </div>
               <div className="text-sm text-gray-500">
                 Độ khó: <strong>{current.difficulty ?? difficulty}</strong>
@@ -395,7 +401,7 @@ export default function WritingTopicPractice() {
             </div>
           </div>
 
-          <div className="p-3 rounded bg-gray-50 border">
+          <div className="p-3 border rounded bg-gray-50">
             <div className="text-sm text-gray-600">
               Câu tiếng Việt (dịch sang tiếng Anh):
             </div>
@@ -403,7 +409,7 @@ export default function WritingTopicPractice() {
           </div>
 
           <textarea
-            className="w-full border p-2 mt-4 rounded"
+            className="w-full p-2 mt-4 border rounded"
             placeholder="Nhập bản dịch tiếng Anh của bạn..."
             value={userInput}
             onChange={(e) => setUserInput(e.target.value)}
@@ -414,14 +420,17 @@ export default function WritingTopicPractice() {
             <button
               onClick={checkSentence}
               disabled={checking}
-              className="bg-yellow-500 text-white px-3 py-2 rounded"
+              className="px-3 py-2 text-white bg-yellow-500 rounded"
             >
               {checking ? "Đang kiểm tra..." : "✅ Kiểm tra"}
             </button>
 
             <button
               onClick={() => setShowCorrect((s) => !s)}
-              className="bg-gray-200 px-3 py-2 rounded"
+              className={`px-3 py-2  rounded ${
+                !checkResult ? "bg-gray-300 cursor-not-allowed" : "bg-gray-200"
+              } `}
+              disabled={!checkResult}
             >
               {showCorrect ? "Ẩn đáp án" : "Hiện đáp án"}
             </button>
@@ -441,11 +450,11 @@ export default function WritingTopicPractice() {
 
           {/* Result area */}
           {checkResult && (
-            <div className="mt-4 p-3 border rounded bg-white">
+            <div className="p-3 mt-4 bg-white border rounded">
               <div className="flex items-center justify-between">
-                <div className="flex gap-2 items-center">
+                <div className="flex items-center gap-2">
                   {renderBadge(checkResult.rating)}
-                  <div className="text-sm text-gray-600 ml-2">
+                  <div className="ml-2 text-sm text-gray-600">
                     Score:{" "}
                     <strong>
                       {typeof checkResult.score === "number"
@@ -469,7 +478,7 @@ export default function WritingTopicPractice() {
               {showCorrect && (
                 <div className="mt-3">
                   <div className="text-sm text-gray-500">Bản dịch chuẩn:</div>
-                  <div className="mt-1 p-2 border rounded bg-gray-50">
+                  <div className="p-2 mt-1 border rounded bg-gray-50">
                     <strong>{checkResult.correctAnswer ?? "—"}</strong>
                   </div>
 
@@ -483,7 +492,7 @@ export default function WritingTopicPractice() {
           )}
         </div>
       ) : (
-        <div className="mt-4 p-4 border rounded bg-white text-center text-gray-500">
+        <div className="p-4 mt-4 text-center text-gray-500 bg-white border rounded">
           Nhấn "🎲 Sinh {batchSize} câu theo Topic" để bắt đầu.
         </div>
       )}

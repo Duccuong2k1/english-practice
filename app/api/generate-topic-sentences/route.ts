@@ -37,7 +37,7 @@ Quy tắc:
 
 Trả về JSON hợp lệ dạng mảng:
 [
-  { "tense": "tên thì", "difficulty": "${difficulty}", "topic": "${topic}", "sentence": "..." },
+  { "tense": "tên thì", formula: "công thức của thì" ,"difficulty": "${difficulty}", "topic": "${topic}", "sentence": "..." },
   ...
 ]
 `
