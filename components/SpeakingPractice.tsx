@@ -303,10 +303,10 @@ export default function SpeakingPractice() {
             </button>
 
             <button
-              disabled={!score || score < 9}
+              disabled={!score || score < 8}
               onClick={nextSentence}
               className={`px-4 py-1 rounded ${
-                score && score >= 9
+                score && score >= 8
                   ? "bg-blue-600 text-white"
                   : "bg-gray-300 text-gray-600 cursor-not-allowed"
               }`}

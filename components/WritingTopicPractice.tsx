@@ -189,7 +189,7 @@ export default function WritingTopicPractice() {
       //     normalized.rating === "Đúng" ||
       //     normalized.score! >= 8;
       //   setCanNext(Boolean(allowNext));
-      const allowNext = normalized.score !== undefined && normalized.score >= 9;
+      const allowNext = normalized.score !== undefined && normalized.score >= 8;
       setCanNext(allowNext);
     } catch (err) {
       console.error("Lỗi khi check:", err);
