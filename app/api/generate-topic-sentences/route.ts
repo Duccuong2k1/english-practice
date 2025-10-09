@@ -19,6 +19,7 @@ export async function POST(req: Request) {
         const prompt = `
 Bạn là trợ lý luyện viết tiếng Anh.
 Hãy sinh ra ${count} câu TIẾNG VIỆT tương ứng với chủ đề "${topic}", 
+Mỗi lần sinh câu không được trùng lặp với lần sinh trước đó, mới mẻ , không được lặp lại câu
 trình độ ${difficulty} (CEFR), và ngẫu nhiên 1 trong các thì tiếng Anh sau cho mỗi câu:
 - Hiện tại đơn
 - Hiện tại tiếp diễn

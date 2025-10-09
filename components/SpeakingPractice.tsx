@@ -8,6 +8,7 @@ const TOPICS = [
   "food",
   "technology",
   "TEST TOEIC",
+  "introduce yourself",
 ];
 const LEVELS = ["beginner", "intermediate", "advanced"];
 

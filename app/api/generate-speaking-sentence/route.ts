@@ -14,6 +14,7 @@ export async function POST(req: NextRequest) {
   const prompt = `
 Bạn là giáo viên tiếng Anh. Hãy tạo 1 câu tiếng Anh ngắn, rõ ràng để học viên luyện nói.
 Yêu cầu:
+- Mỗi lần tạo phải là 1 câu khác trước đó, không được trùng lặp với lần tạo trước đó
 - Chủ đề: ${topic}
 - Mức độ: ${level} (beginner / intermediate / advanced)
 - Độ dài: 1 câu (5–15 từ), dễ phát âm, không dùng từ quá khó
