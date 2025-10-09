@@ -26,7 +26,7 @@ const topics = [
   "Mua sắm",
   "Thời tiết",
   "Phỏng vấn",
-  "Giới thiệu bản thân, công việc"
+  "Giới thiệu bản thân, công việc",
   "IELTS",
   "TOEIC",
 ];
